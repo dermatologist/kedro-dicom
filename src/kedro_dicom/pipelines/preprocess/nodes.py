@@ -16,7 +16,7 @@ def array_to_img(array: np.ndarray,
     Returns:
         Image: PIL.Image as output
     """
-    return Image.fromarray(array).resize(size=(size[0], size[1]))
+    return Image.fromarray(array)#.resize(size=(size[0], size[1]))
 
 
 
@@ -37,17 +37,17 @@ def preprocess_dicom(dicom: Dict) -> List:
     partition_data = partition_load_func()
 
     csv = partition_data[0]
-    # imgs[partition_id] = array_to_img(partition_data[1])
+    imgs[partition_id] = array_to_img(partition_data[1])
 
-    imgs[partition_id] = partition_data[1]
+    #imgs[partition_id] = partition_data[1]
 
     #Loop on dict to extract img and csv data
     for partition_id, partition_load_func in dicom.items():
         partition_data = partition_load_func()
 
 
-        imgs[partition_id] = partition_data[1]
-        # imgs[partition_id] = array_to_img(partition_data[1])
+        #imgs[partition_id] = partition_data[1]
+        imgs[partition_id] = array_to_img(partition_data[1])
 
         csv = pd.concat(
             [csv, partition_data[0]], axis=0

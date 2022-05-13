@@ -50,7 +50,19 @@ class DICOMDataSet(AbstractDataSet):
             #Delete first line
             df = df.iloc[1:]
             pixel_array = ds.pixel_array
-            return (df, pixel_array)
+
+
+            # Convert pixel_array (img) to -> gray image (img_2d_scaled)
+            ## Step 1. Convert to float to avoid overflow or underflow losses.
+            img_2d = pixel_array.astype(float)
+
+            ## Step 2. Rescaling grey scale between 0-255
+            img_2d_scaled = (np.maximum(img_2d, 0) / img_2d.max()) * 255.0
+
+            ## Step 3. Convert to uint
+            img_2d_scaled = np.uint8(img_2d_scaled)
+
+            return (df, img_2d_scaled)
 
 
     def _save(self, data: np.ndarray) -> None:

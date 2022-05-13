@@ -48,12 +48,24 @@ class TestProjectContext:
         }
         path = 'data/01_raw/test_imageset'
         filename_suffix =  ".dcm"
+
         data_set = PartitionedDataSet(
             dataset=dataset, path=path, filename_suffix=filename_suffix)
         reloaded = data_set.load()
         data = preprocess_dicom(reloaded)
         print(data[0].shape)
-        for key, value in data[1].items():
-            print(key, value)
-            assert (value.dtype == np.int16)
+
+        dataset = {
+            "type": "kedro.extras.datasets.pillow.ImageDataSet",
+        }
+        path = 'data/02_intermediate/test_imageset'
+        filename_suffix = ".png"
+        data_set = PartitionedDataSet(
+            dataset=dataset, path=path, filename_suffix=filename_suffix)
+        data_set.save(data[1])
+        # for key, value in data[1].items():
+        #     print(key, value)
+        #     assert (value.dtype == np.int16)
+
+
         #assert data['_cat_lazy_sleep_1']['labels'] == ['cat', 'lazy', 'sleep']
