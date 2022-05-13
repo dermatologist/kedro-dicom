@@ -5,7 +5,7 @@ from typing import List,Dict,Tuple
 from PIL import Image
 
 
-def array_to_img(array: np.ndarray, 
+def array_to_img(array: np.ndarray,
                 size: Tuple[int, int] = (256,256)) -> Image:
     """Convert np.ndarray (pixel array) to PIL.Image and resizes eventually
 
@@ -38,7 +38,7 @@ def preprocess_dicom(dicom: Dict) -> List:
 
     csv = partition_data[0]
     imgs[partition_id] = array_to_img(partition_data[1])
-    
+
     #Loop on dict to extract img and csv data
     for partition_id, partition_load_func in dicom.items():
         partition_data = partition_load_func()
@@ -73,6 +73,6 @@ def clean_metadata(csv : pd.DataFrame) -> pd.DataFrame:
         if len(csv[col].value_counts()) <= 1:
             col_drops += [col]
 
-    csv_train.drop(columns=col_drops,inplace=True)
+    csv_train = csv.drop(columns=col_drops,inplace=True)
 
     return csv_train
