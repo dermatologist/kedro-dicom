@@ -22,14 +22,14 @@ class DICOMDataSet(AbstractDataSet):
         Args:
             filepath: The location of the DICOM file to load / save data.
         """
-        
+
         # parse the path and protocol (e.g. file, http, s3, etc.)
         protocol, path = get_protocol_and_path(filepath)
         self._protocol = protocol
         self._filepath = PurePosixPath(path)
         self._fs = fsspec.filesystem(self._protocol)
 
-    def _load(self) -> (pd.DataFrame,np.ndarray):
+    def _load(self) -> Any:
         """Loads data from the DICOM file.
 
         Returns:
@@ -51,13 +51,13 @@ class DICOMDataSet(AbstractDataSet):
             df = df.iloc[1:]
             pixel_array = ds.pixel_array
             return (df,pixel_array)
-    
+
 
     def _save(self, data: np.ndarray) -> None:
         """Saves image data to the specified filepath"""
         return None
 
-    
+
     def _describe(self) -> Dict[str, Any]:
         """Returns a dict that describes the attributes of the dataset.
         """
