@@ -16,7 +16,9 @@ from kedro.framework.project import settings
 from kedro.config import ConfigLoader
 from kedro.framework.context import KedroContext
 from kedro.framework.hooks import _create_hook_manager
-
+from kedro.io import PartitionedDataSet
+from kedro_dicom.pipelines.preprocess.nodes import preprocess_dicom
+import numpy as np
 
 @pytest.fixture
 def config_loader():
@@ -39,3 +41,19 @@ def project_context(config_loader):
 class TestProjectContext:
     def test_project_path(self, project_context):
         assert project_context.project_path == Path.cwd()
+
+    def test_dicom_read(self, project_context):
+        dataset = {
+            "type": "kedro_dicom.io.datasets.dicom_dataset.DICOMDataSet",
+        }
+        path = 'data/01_raw/test_imageset'
+        filename_suffix =  ".dcm"
+        data_set = PartitionedDataSet(
+            dataset=dataset, path=path, filename_suffix=filename_suffix)
+        reloaded = data_set.load()
+        data = preprocess_dicom(reloaded)
+        print(data[0].shape)
+        for key, value in data[1].items():
+            print(key, value)
+            assert (value.dtype == np.int16)
+        #assert data['_cat_lazy_sleep_1']['labels'] == ['cat', 'lazy', 'sleep']
