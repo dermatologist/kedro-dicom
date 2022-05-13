@@ -2,7 +2,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to project's kedro_dicom API docs!
+Welcome to project kedro_dicom's API docs!
 =============================================
 
 .. toctree::
