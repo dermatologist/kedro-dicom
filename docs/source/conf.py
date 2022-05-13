@@ -29,7 +29,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# pneumothorax documentation build
+# kedro_dicom documentation build
 # configuration file, created by sphinx-quickstart.
 #
 # This file is execfile()d with the current directory set to its
@@ -50,11 +50,11 @@ import re
 from kedro.framework.cli.utils import find_stylesheets
 from recommonmark.transform import AutoStructify
 
-from pneumothorax import __version__ as release
+from kedro_dicom import __version__ as release
 
 # -- Project information -----------------------------------------------------
 
-project = "pneumothorax"
+project = "kedro_dicom"
 copyright = "2020, QuantumBlack Visual Analytics Limited"
 author = "QuantumBlack"
 
@@ -149,7 +149,7 @@ html_show_sourcelink = False
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "pneumothoraxdoc"
+htmlhelp_basename = "kedro_dicomdoc"
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -177,8 +177,8 @@ latex_elements = {
 latex_documents = [
     (
         master_doc,
-        "pneumothorax.tex",
-        "pneumothorax Documentation",
+        "kedro_dicom.tex",
+        "kedro_dicom Documentation",
         "QuantumBlack",
         "manual",
     )
@@ -191,8 +191,8 @@ latex_documents = [
 man_pages = [
     (
         master_doc,
-        "pneumothorax",
-        "pneumothorax Documentation",
+        "kedro_dicom",
+        "kedro_dicom Documentation",
         [author],
         1,
     )
@@ -206,11 +206,11 @@ man_pages = [
 texinfo_documents = [
     (
         master_doc,
-        "pneumothorax",
-        "pneumothorax Documentation",
+        "kedro_dicom",
+        "kedro_dicom Documentation",
         author,
-        "pneumothorax",
-        "Project pneumothorax codebase.",
+        "kedro_dicom",
+        "Project kedro_dicom codebase.",
         "Data-Science",
     )
 ]

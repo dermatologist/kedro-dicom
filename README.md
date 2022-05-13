@@ -1,4 +1,4 @@
-# pneumothorax
+# kedro_dicom
 
 ## Overview
 

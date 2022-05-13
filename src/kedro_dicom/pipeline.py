@@ -34,7 +34,7 @@ from typing import Dict
 from kedro.pipeline import Pipeline
 
 
-from pneumothorax.pipelines.data_engineering import pipeline as de
+from kedro_dicom.pipelines.data_engineering import pipeline as de
 
 
 def create_pipelines(**kwargs) -> Dict[str, Pipeline]:

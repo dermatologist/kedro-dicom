@@ -1,5 +1,5 @@
 from kedro.pipeline import node, Pipeline
-from pneumothorax.pipelines.data_engineering.nodes import (
+from kedro_dicom.pipelines.data_engineering.nodes import (
     preprocess_dicom,clean_metadata
 )
 
