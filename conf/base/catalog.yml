@@ -6,7 +6,7 @@
 dicom_test:
     type: PartitionedDataSet
     dataset: kedro_dicom.io.datasets.dicom_dataset.DICOMDataSet
-    path: data/01_raw/dicom-images-test
+    path: data/01_raw/test_imageset
     filename_suffix: ".dcm"
     layer: raw
 
@@ -18,7 +18,7 @@ dicom_dummy:
 dicom_train:
     type: PartitionedDataSet
     dataset: kedro_dicom.io.datasets.dicom_dataset.DICOMDataSet
-    path: data/01_raw/dicom-images-train
+    path: data/01_raw/test_imageset
     filename_suffix: ".dcm"
     layer: raw
 
