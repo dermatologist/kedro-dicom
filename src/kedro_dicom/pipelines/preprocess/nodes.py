@@ -77,6 +77,6 @@ def clean_metadata(csv : pd.DataFrame) -> pd.DataFrame:
         if len(csv[col].value_counts()) <= 1:
             col_drops += [col]
 
-    csv_train = csv.drop(columns=col_drops,inplace=True)
+    csv_train = csv.drop(columns=col_drops)
 
     return csv_train
