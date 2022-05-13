@@ -219,6 +219,10 @@ notebook==6.4.11
     #   widgetsnbextension
 notebook-shim==0.1.0
     # via nbclassic
+numpy==1.22.3
+    # via
+    #   -r /Users/M267492/Repository/kedro-dicom/src/requirements.txt
+    #   pandas
 packaging==21.3
     # via
     #   ipykernel
@@ -228,6 +232,8 @@ packaging==21.3
     #   nbconvert
     #   pytest
     #   qtpy
+pandas==1.4.2
+    # via -r /Users/M267492/Repository/kedro-dicom/src/requirements.txt
 pandocfilters==1.5.0
     # via nbconvert
 parso==0.8.3
@@ -240,6 +246,8 @@ pexpect==4.8.0
     # via ipython
 pickleshare==0.7.5
     # via ipython
+pillow==9.1.0
+    # via -r /Users/M267492/Repository/kedro-dicom/src/requirements.txt
 pip-tools==6.6.0
     # via kedro
 platformdirs==2.5.2
@@ -270,6 +278,8 @@ pycodestyle==2.7.0
     # via flake8
 pycparser==2.21
     # via cffi
+pydicom==2.3.0
+    # via -r /Users/M267492/Repository/kedro-dicom/src/requirements.txt
 pyflakes==2.3.1
     # via flake8
 pygments==2.12.0
@@ -295,12 +305,15 @@ python-dateutil==2.8.2
     # via
     #   arrow
     #   jupyter-client
+    #   pandas
 python-json-logger==2.0.2
     # via kedro
 python-slugify==6.1.2
     # via cookiecutter
 pytz==2022.1
-    # via babel
+    # via
+    #   babel
+    #   pandas
 pyyaml==5.4.1
     # via
     #   kedro
