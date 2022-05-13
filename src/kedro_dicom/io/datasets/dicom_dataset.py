@@ -1,6 +1,6 @@
 from pathlib import PurePosixPath
 
-from typing import Any,Dict
+from typing import Any, Dict, Tuple
 
 from kedro.io import AbstractDataSet
 from kedro.io.core import get_filepath_str, get_protocol_and_path
@@ -29,7 +29,7 @@ class DICOMDataSet(AbstractDataSet):
         self._filepath = PurePosixPath(path)
         self._fs = fsspec.filesystem(self._protocol)
 
-    def _load(self) -> Any:
+    def _load(self) -> Tuple:
         """Loads data from the DICOM file.
 
         Returns:
@@ -50,7 +50,7 @@ class DICOMDataSet(AbstractDataSet):
             #Delete first line
             df = df.iloc[1:]
             pixel_array = ds.pixel_array
-            return (df,pixel_array)
+            return (df, pixel_array)
 
 
     def _save(self, data: np.ndarray) -> None:
