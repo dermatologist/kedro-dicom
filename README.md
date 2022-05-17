@@ -1,5 +1,64 @@
 # Kedro Dicom
 
+This package consists of [Kedro pipelines](https://kedro.readthedocs.io/en/stable/kedro.pipeline.html) for preprocessing DICOM images. It converts
+DICOM images to PNG and creates a CSV file from metadata.
+## Howto install
+
+```
+
+## How to install
+
+- pip install git+https://github.com/dermatologist/kedro-dicom.git
+```
+
+## How to use
+```
+from kedro_dicom.pipelines.preprocess.nodes import (
+    preprocess_dicom, clean_metadata
+)
+
+Pipeline(
+        [
+            node(
+                func=preprocess_dicom,
+                inputs="dicom_train",
+                outputs=["csv_train","img_train"],
+                name="preprocessing_dicom",
+            ),
+            node(
+                func=clean_metadata,
+                inputs="csv_train",
+                outputs="csv_clean",
+                name="clean_metadata",
+            ),
+        ]
+    )
+
+```
+
+## Catalog
+
+```dicom_train:
+    type: PartitionedDataSet
+    dataset: kedro_dicom.io.datasets.dicom_dataset.DICOMDataSet
+    path: data/01_raw/test_imageset
+    filename_suffix: ".dcm"
+
+img_train:
+    type: PartitionedDataSet
+    dataset: pillow.ImageDataSet
+    path: data/05_model_input/img_train
+    filename_suffix: ".png"
+
+csv_train:
+    type: pandas.CSVDataSet
+    filepath: data/02_intermediate/train.csv
+
+csv_clean:
+    type: pandas.CSVDataSet
+    filepath: data/03_primary/train.csv
+
+```
 ## Overview
 
 This is your new Kedro project, which was generated using `Kedro 0.18.1`.
