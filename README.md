@@ -38,7 +38,9 @@ Pipeline(
 
 ## Catalog
 
-```dicom_train:
+```
+
+dicom_train:
     type: PartitionedDataSet
     dataset: kedro_dicom.io.datasets.dicom_dataset.DICOMDataSet
     path: data/01_raw/test_imageset
