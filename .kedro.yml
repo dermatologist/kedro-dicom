@@ -1,1 +1,1 @@
-context_path: pneumothorax.run.ProjectContext
+context_path: kedro_dicom.run.ProjectContext

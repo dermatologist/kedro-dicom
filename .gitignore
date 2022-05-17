@@ -1,13 +1,10 @@
 ##########################
 # KEDRO PROJECT
 
-# ignore all vscode files
-.vscode/settings.json
-
-
 # ignore all local configuration
 conf/local/**
 !conf/local/.gitkeep
+.telemetry
 
 # ignore potentially sensitive credentials files
 conf/**/*credentials*
@@ -147,6 +144,7 @@ celerybeat-schedule
 
 # Environments
 .env
+.envrc
 .venv
 env/
 venv/

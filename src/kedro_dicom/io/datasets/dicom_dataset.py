@@ -1,6 +1,6 @@
 from pathlib import PurePosixPath
 
-from typing import Any,Dict
+from typing import Any, Dict, Tuple
 
 from kedro.io import AbstractDataSet
 from kedro.io.core import get_filepath_str, get_protocol_and_path
@@ -22,14 +22,14 @@ class DICOMDataSet(AbstractDataSet):
         Args:
             filepath: The location of the DICOM file to load / save data.
         """
-        
+
         # parse the path and protocol (e.g. file, http, s3, etc.)
         protocol, path = get_protocol_and_path(filepath)
         self._protocol = protocol
         self._filepath = PurePosixPath(path)
         self._fs = fsspec.filesystem(self._protocol)
 
-    def _load(self) -> (pd.DataFrame,np.ndarray):
+    def _load(self) -> Tuple:
         """Loads data from the DICOM file.
 
         Returns:
@@ -50,14 +50,26 @@ class DICOMDataSet(AbstractDataSet):
             #Delete first line
             df = df.iloc[1:]
             pixel_array = ds.pixel_array
-            return (df,pixel_array)
-    
+
+
+            # Convert pixel_array (img) to -> gray image (img_2d_scaled)
+            ## Step 1. Convert to float to avoid overflow or underflow losses.
+            img_2d = pixel_array.astype(float)
+
+            ## Step 2. Rescaling grey scale between 0-255
+            img_2d_scaled = (np.maximum(img_2d, 0) / img_2d.max()) * 255.0
+
+            ## Step 3. Convert to uint
+            img_2d_scaled = np.uint8(img_2d_scaled)
+
+            return (df, img_2d_scaled)
+
 
     def _save(self, data: np.ndarray) -> None:
         """Saves image data to the specified filepath"""
         return None
 
-    
+
     def _describe(self) -> Dict[str, Any]:
         """Returns a dict that describes the attributes of the dataset.
         """
