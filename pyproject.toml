@@ -1,3 +1,7 @@
+[project]
+name = "kedro_dicom"
+version = "0.2"
+
 [tool.kedro]
 package_name = "kedro_dicom"
 project_name = "Kedro Dicom"
