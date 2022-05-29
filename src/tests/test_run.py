@@ -42,27 +42,27 @@ class TestProjectContext:
     def test_project_path(self, project_context):
         assert project_context.project_path == Path.cwd()
 
-    def test_dicom_read(self, project_context):
-        dataset = {
-            "type": "kedro_dicom.io.datasets.dicom_dataset.DICOMDataSet",
-        }
-        path = 'data/01_raw/test_imageset'
-        filename_suffix =  ".dcm"
+    # def test_dicom_read(self, project_context):
+    #     dataset = {
+    #         "type": "kedro_dicom.io.datasets.dicom_dataset.DICOMDataSet",
+    #     }
+    #     path = 'data/01_raw/test_imageset'
+    #     filename_suffix =  ".dcm"
 
-        data_set = PartitionedDataSet(
-            dataset=dataset, path=path, filename_suffix=filename_suffix)
-        reloaded = data_set.load()
-        data = preprocess_dicom(reloaded)
-        print(data[0].shape)
+    #     data_set = PartitionedDataSet(
+    #         dataset=dataset, path=path, filename_suffix=filename_suffix)
+    #     reloaded = data_set.load()
+    #     data = preprocess_dicom(reloaded)
+    #     print(data[0].shape)
 
-        dataset = {
-            "type": "kedro.extras.datasets.pillow.ImageDataSet",
-        }
-        path = 'data/02_intermediate/test_imageset'
-        filename_suffix = ".png"
-        data_set = PartitionedDataSet(
-            dataset=dataset, path=path, filename_suffix=filename_suffix)
-        data_set.save(data[1])
+    #     dataset = {
+    #         "type": "kedro.extras.datasets.pillow.ImageDataSet",
+    #     }
+    #     path = 'data/02_intermediate/test_imageset'
+    #     filename_suffix = ".png"
+    #     data_set = PartitionedDataSet(
+    #         dataset=dataset, path=path, filename_suffix=filename_suffix)
+    #     data_set.save(data[1])
         # for key, value in data[1].items():
         #     print(key, value)
         #     assert (value.dtype == np.int16)
