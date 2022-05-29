@@ -1,31 +1,3 @@
-# Copyright 2020 QuantumBlack Visual Analytics Limited
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
-# NONINFRINGEMENT. IN NO EVENT WILL THE LICENSOR OR OTHER CONTRIBUTORS
-# BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN
-# ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF, OR IN
-# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-#
-# The QuantumBlack Visual Analytics Limited ("QuantumBlack") name and logo
-# (either separately or in combination, "QuantumBlack Trademarks") are
-# trademarks of QuantumBlack. The License does not grant you any right or
-# license to the QuantumBlack Trademarks. You may not use the QuantumBlack
-# Trademarks or any confusingly similar mark as a trademark for your product,
-# or use the QuantumBlack Trademarks in any other manner that might cause
-# confusion in the marketplace, including but not limited to in advertising,
-# on websites, or on software.
-#
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 """
 This module contains an example test.
 
@@ -33,23 +5,67 @@ Tests should be placed in ``src/tests``, in modules that mirror your
 project's structure, and in files named test_*.py. They are simply functions
 named ``test_*`` which test a unit of logic.
 
-To run the tests, run ``kedro test``.
+To run the tests, run ``kedro test`` from the project root directory.
 """
+
 from pathlib import Path
 
 import pytest
 
-from pneumothorax.run import ProjectContext
+from kedro.framework.project import settings
+from kedro.config import ConfigLoader
+from kedro.framework.context import KedroContext
+from kedro.framework.hooks import _create_hook_manager
+from kedro.io import PartitionedDataSet
+from kedro_dicom.pipelines.preprocess.nodes import preprocess_dicom
+import numpy as np
+
+@pytest.fixture
+def config_loader():
+    return ConfigLoader(conf_source=str(Path.cwd() / settings.CONF_SOURCE))
 
 
 @pytest.fixture
-def project_context():
-    return ProjectContext(str(Path.cwd()))
+def project_context(config_loader):
+    return KedroContext(
+        package_name="kedro_dicom",
+        project_path=Path.cwd(),
+        config_loader=config_loader,
+        hook_manager=_create_hook_manager(),
+    )
 
 
+# The tests below are here for the demonstration purpose
+# and should be replaced with the ones testing the project
+# functionality
 class TestProjectContext:
-    def test_project_name(self, project_context):
-        assert project_context.project_name == "pneumothorax"
+    def test_project_path(self, project_context):
+        assert project_context.project_path == Path.cwd()
 
-    def test_project_version(self, project_context):
-        assert project_context.project_version == "0.16.2"
+    def test_dicom_read(self, project_context):
+        dataset = {
+            "type": "kedro_dicom.io.datasets.dicom_dataset.DICOMDataSet",
+        }
+        path = 'data/01_raw/test_imageset'
+        filename_suffix =  ".dcm"
+
+        data_set = PartitionedDataSet(
+            dataset=dataset, path=path, filename_suffix=filename_suffix)
+        reloaded = data_set.load()
+        data = preprocess_dicom(reloaded)
+        print(data[0].shape)
+
+        dataset = {
+            "type": "kedro.extras.datasets.pillow.ImageDataSet",
+        }
+        path = 'data/02_intermediate/test_imageset'
+        filename_suffix = ".png"
+        data_set = PartitionedDataSet(
+            dataset=dataset, path=path, filename_suffix=filename_suffix)
+        data_set.save(data[1])
+        # for key, value in data[1].items():
+        #     print(key, value)
+        #     assert (value.dtype == np.int16)
+
+
+        #assert data['_cat_lazy_sleep_1']['labels'] == ['cat', 'lazy', 'sleep']

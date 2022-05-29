@@ -25,7 +25,34 @@
 #
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""pneumothorax
+
+"""Construction of the master pipeline.
 """
 
-__version__ = "0.1"
+from typing import Dict
+
+from kedro.pipeline import Pipeline
+
+
+from kedro_dicom.pipelines.preprocess import pipeline as de
+
+
+def create_pipelines(**kwargs) -> Dict[str, Pipeline]:
+    """Create the project's pipeline.
+
+    Args:
+        kwargs: Ignore any additional arguments added in the future.
+
+    Returns:
+        A mapping from a pipeline name to a ``Pipeline`` object.
+
+    """
+
+    de_pipeline = de.create_pipeline()
+
+
+    return {
+        "de": de_pipeline,
+        "__default__": de_pipeline,
+    }
+
