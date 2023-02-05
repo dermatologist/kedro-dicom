@@ -1,7 +1,8 @@
-# Kedro Dicom
+# Kedro DICOM :stethoscope:	
 
 This package consists of [Kedro pipelines](https://kedro.readthedocs.io/en/stable/kedro.pipeline.html) for preprocessing DICOM images. It converts
-DICOM images to PNG and creates a CSV file from metadata.
+DICOM images to PNG and creates a CSV file from metadata. Import this package into [this template](https://github.com/dermatologist/kedro-multimodal) for multimodal machine learning.
+
 ## Howto install
 
 ```
